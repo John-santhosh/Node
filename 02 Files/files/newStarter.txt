@@ -1,0 +1,3 @@
+Write from node
+
+ append from node to next line 
