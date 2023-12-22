@@ -6,13 +6,13 @@ const { format } = require("date-fns");
 const { v4: uuid } = require("uuid");
 
 console.log("testing");
-console.log(format(new Date(), "yyyyMMdd\tHH:mm:ss"));
+console.log(format(new Date(), "yyyy/MM/dd\tHH:mm:ss"));
 
 console.log(uuid());
 
 // semantic versioning numbers
 // "uuid": "^9.2.1"
-// -the 1 number(9) is major version
+// -the 1st number(9) is major version
 // -The 2nd number(0) is a minor version
 // -The 3rd number is (1) is a patch
 

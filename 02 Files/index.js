@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 // reading a file
+console.log(__dirname);
 fs.readFile(
   path.join(__dirname, "files", "starter.txt"),
   //either specify encoding here or while logging console.log(data.toString());
@@ -12,6 +13,15 @@ fs.readFile(
     console.log(data);
   }
 );
+
+// fs.writeFile(
+//   path.join(__dirname, "files", "replay.txt"),
+//   "utf8 john john john",
+//   (err) => {
+//     if (err) throw err;
+//     console.log("write completed");
+//   }
+// );
 
 // the below code looks like, it is making a CB hell
 //write to a file
@@ -50,19 +60,19 @@ const fsPromises = require("fs").promises;
 const fileOps = async () => {
   try {
     const data = await fsPromises.readFile(
-      path.join(__dirname, "files", "promiseWriter.txt"),
+      path.join(__dirname, "files", "starter.txt"),
       "utf8"
     );
     console.log(data);
 
     //deleting a file
-    await fsPromises.unlink(path.join(__dirname, "files", "promiseWriter.txt"));
+    // await fsPromises.unlink(path.join(__dirname, "files", "promiseWriter.txt"));
 
     await fsPromises.writeFile(
       path.join(__dirname, "files", "promiseWriter.txt"),
       data
     );
-
+    // will create a file if not exist and add a line to it
     await fsPromises.appendFile(
       path.join(__dirname, "files", "promiseWriter.txt"),
       "\n\n Nice to meet you"

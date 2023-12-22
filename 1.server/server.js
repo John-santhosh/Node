@@ -8,8 +8,9 @@ console.log("hello World");
 
 // 4) has common core modules
 //5) commonjs modules instead of ES6
+// 6) missing some apis like fetch
 
-// ### Node js is missing js API's like fetch though we can use external packages to make it available.  ###
+// ### Node js is missijohnsantosh007@gmail.comng js API's like fetch though we can use external packages to make it available.  ###
 
 const os = require("os");
 const path = require("path");
