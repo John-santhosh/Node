@@ -26,22 +26,7 @@ const cors = require("cors");
 app.use(logger);
 
 // 3rd party middleware
-const whiteList = [
-  "https://www.yoursite.com",
-  "http://127.0.0.1:5500",
-  "http://localhost:3500",
-  "https://www.thunderclient.com",
-];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by cors"));
-    }
-  },
-  optionSuccessStatus: 200,
-};
+
 app.use(cors(corsOptions));
 
 // urlencoded data => formData
