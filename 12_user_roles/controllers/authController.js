@@ -22,7 +22,7 @@ const handleLogin = async (req, res) => {
   });
 
   // evaluate password.
-  if (!foundUser) return res.sendStatus(401); // unauthorized
+  if (!foundUser) res.sendStatus(401); // unauthorized
 
   const match = bcrypt.compare(foundUser.password, pwd);
   if (match) {

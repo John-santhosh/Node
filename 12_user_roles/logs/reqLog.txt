@@ -1,0 +1,14 @@
+20231226	15:42:21	7d957202-ab31-492b-b5ee-7216d9b851e7	GET	undefined	/
+20231226	15:42:21	159f873d-7a59-4e7f-a528-f22f8c1a13fb	GET	undefined	/css/style.css
+20231226	15:42:21	31984a41-e1b6-45c5-ad66-8422a2f2ba8c	GET	undefined	/favicon.ico
+20231226	15:43:19	c0508169-015f-4d23-9ba5-c8e1980b65cb	POST	undefined	/register
+20231226	15:43:24	fcc0344d-2146-40e1-966a-5106b2d20c7d	POST	undefined	/register
+20231226	15:44:02	d212e46b-ede5-4a6a-a94b-2ea92586a5b1	POST	undefined	/auth
+20231226	15:44:09	24970f3c-aaa1-4279-8a63-bf76de66e35a	POST	undefined	/auth
+20231226	15:47:12	24d00157-532c-4fc8-9397-729b66671d46	POST	undefined	/auth
+20231226	15:48:42	6f36be31-ae96-40b6-8056-91d472748c9c	POST	undefined	/auth
+20231226	15:50:40	361aedc6-26f1-4c78-bd04-1879bae18085	POST	undefined	/auth
+20231226	15:51:34	812d5cc0-560c-4292-bf28-c752085f87f6	POST	undefined	/auth
+20231226	15:53:22	63940f0b-2a73-4f6e-b575-be3b0e827968	POST	undefined	/auth
+20231226	15:53:58	7c183aaa-fbfb-4ef4-a4f4-1b9dd23f31f5	POST	undefined	/auth
+20231226	15:54:05	0edd29ed-8a5d-4934-81c6-cbad1aa0e85f	POST	undefined	/auth
