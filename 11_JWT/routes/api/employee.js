@@ -19,6 +19,9 @@ const {
 
 router
   .route("/")
+  // will check for the jwt first and proceed to next()
+  // will do like this or we can move it to server.js so that it will apply for every route.
+  // .get(verifyJWT, getAllEmployees)
   .get(getAllEmployees)
   .post(createNewEmployee)
   .put(updateEmployee)

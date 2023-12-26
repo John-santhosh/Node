@@ -7,9 +7,9 @@ const data = {
 // this is like connecting a database for now!
 // data.employees = require("../model/employee.json");
 
-const getAllEmployees = (req, res) => {
+function getAllEmployees(req, res) {
   res.json(data.employees);
-};
+}
 
 // create new
 const createNewEmployee = (req, res) => {

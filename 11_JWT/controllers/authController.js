@@ -7,7 +7,12 @@ const userDB = {
 
 const bcrypt = require("bcrypt");
 
-const handleLogin = (req, res) => {
+const jwt = require("jsonwebtoken");
+const fspromises = require("fs").promises;
+require("dotenv").config();
+const path = require("path");
+
+const handleLogin = async (req, res) => {
   const { user, pwd } = req.body;
   if (!user || !pwd) {
     res.status(400).json({ message: "user name and pwd required" });
@@ -19,9 +24,40 @@ const handleLogin = (req, res) => {
   // evaluate password.
   if (!foundUser) res.sendStatus(401); // unauthorized
 
-  if (bcrypt.compare(foundUser.password, pwd)) {
+  const match = bcrypt.compare(foundUser.password, pwd);
+  if (match) {
     // this is where we create JWT
-    res.json({ success: `user ${user} is logged in` });
+    // it will require a payload and we are gonna pass the username object not the password to avoid potential risk.
+    const accessToken = jwt.sign(
+      { username: foundUser.userName },
+      process.env.ACCESS_TOKEN_SECRET,
+      // in production the expire time will be a small window of time maybe 5mins or 15 mins
+      { expiresIn: "120s" } // options
+    );
+
+    // it will last longer than the accessToken
+    const refreshToken = jwt.sign(
+      { username: foundUser.userName },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "1d" } // options
+    );
+
+    // saving refreshToken with current user
+    const otherUsers = userDB.users.filter((user) => user.userName !== user);
+    const currentUser = { ...foundUser, refreshToken };
+    userDB.setUsers([...otherUsers, currentUser]);
+    await fspromises.writeFile(
+      path.join(__dirname, "..", "model", "users.json"),
+      JSON.stringify(userDB.users)
+    );
+    // the cookie we sent from our server cant be accessed by js in client and will be sent back on every request and we don't have to send like access token like we did to access token.
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None", // check in browser headers> set-cookies without this
+      maxAge: 24 * 60 * 60 * 1000, //IN ms(milliseconds) - this is equal to one day
+    });
+    res.json({ accessToken, name: foundUser.userName });
   } else {
     res.sendStatus(401);
   }

@@ -6,6 +6,9 @@ const errorHandler = require("./middlewares/errorHandler");
 const PORT = process.env.PORT || 3500;
 const cors = require("cors");
 const { corsOptions } = require("./config/corsOptions");
+const verifyJWT = require("./middlewares/verifyJWT");
+const cookieParser = require("cookie-parser");
+const credentials = require("./middlewares/credential");
 
 // What is middleware?
 // it is anything that is in between the req and response
@@ -27,8 +30,11 @@ const { corsOptions } = require("./config/corsOptions");
 // custom middleware
 app.use(logger);
 
-// 3rd party middleware
+//handle options credentials check - before CORS!
+// and fetch cookies credentials requirements
+app.use(credentials);
 
+// 3rd party middleware
 app.use(cors(corsOptions));
 
 // urlencoded data => formData
@@ -37,6 +43,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // built-in middleware for json
 app.use(express.json());
+
+// middleware for cookies
+app.use(cookieParser());
 
 // serve static files like images, css , text files
 app.use("/", express.static(path.join(__dirname, "/public")));
@@ -47,9 +56,18 @@ app.use("/subdir", express.static(path.join(__dirname, "/public")));
 // Routes
 app.use("/", require("./routes/root"));
 app.use("/subdir", require("./routes/subdir"));
-// app.use("/employees", require("./routes/api/employee"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
+app.use("/refresh", require("./routes/refresh"));
+app.use("/logout", require("./routes/logout"));
+
+// we have to move all the routes which need to protected below the verifyJWT()
+// function since the flow is like the water fall if the verifyJWT() fails it
+// wont go further down
+
+app.use(verifyJWT);
+app.use("/employees", require("./routes/api/employee"));
+// app.use();
 
 app.all("*", (req, res) => {
   res.status(404);
