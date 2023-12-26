@@ -54,7 +54,7 @@ const handleLogin = async (req, res) => {
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "None", // check in browser headers> set-cookies without this
+      sameSite: "None", // check in browser headers> set-cookies without this // won't work if secure and samesite are uncommented while using in thunderclient.
       maxAge: 24 * 60 * 60 * 1000, //IN ms(milliseconds) - this is equal to one day
     });
     res.json({ accessToken, name: foundUser.userName });
