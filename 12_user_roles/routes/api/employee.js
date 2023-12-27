@@ -9,7 +9,8 @@ const {
   deleteEmployee,
   getEmployee,
 } = require("../../controllers/employeesControler");
-
+const ROLES_LIST = require("../../config/roles_list");
+const verifyRoles = require("../../middlewares/verifyRoles");
 // ** this will come from EmployeeController
 // const data = {};
 // // this is like connecting a database for now!
@@ -23,9 +24,9 @@ router
   // will do like this or we can move it to server.js so that it will apply for every route.
   // .get(verifyJWT, getAllEmployees)
   .get(getAllEmployees)
-  .post(createNewEmployee)
-  .put(updateEmployee)
-  .delete(deleteEmployee);
+  .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), createNewEmployee)
+  .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), updateEmployee)
+  .delete(verifyRoles(ROLES_LIST.Admin), deleteEmployee);
 
 // the :id is the named parameter.
 router.route("/:id").get(getEmployee);

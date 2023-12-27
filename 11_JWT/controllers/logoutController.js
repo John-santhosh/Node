@@ -21,7 +21,11 @@ const handleLogout = async (req, res) => {
   });
 
   if (!foundUser) {
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
     return res.sendStatus(204);
   }
 
@@ -36,7 +40,11 @@ const handleLogout = async (req, res) => {
     path.join(__dirname, "..", "model", "users.json"),
     JSON.stringify(userDB.users)
   );
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); // secure: true - only server on production (in production).
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  }); // secure: true - only server on production (in production).
   res.send(204);
 };
 

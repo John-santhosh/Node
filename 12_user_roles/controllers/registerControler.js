@@ -9,7 +9,6 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 
 const handleNewUser = async (req, res) => {
-  console.log({ req: req.body });
   const { user, pwd } = req.body;
 
   if (!user || !pwd) {
@@ -17,15 +16,21 @@ const handleNewUser = async (req, res) => {
   }
 
   //check for duplicate username in DB
-  const existing = userDB.users.find((usr) => usr.name === user);
-  if (existing) res.status(409); // conflict
+  const existing = userDB.users.find((usr) => usr.userName === user);
+  console.log({ exUsers: userDB.users });
+  console.log({ existing });
+  if (existing) return res.sendStatus(409); // conflict
   // const
   try {
     // encrypt password.
     const secretPasswd = await bcrypt.hash(pwd, 10);
 
     // store the new user
-    const newUser = { userName: user, password: secretPasswd };
+    const newUser = {
+      userName: user,
+      password: secretPasswd,
+      roles: { User: 2001 },
+    };
 
     userDB.setUsers([...userDB.users, newUser]);
 

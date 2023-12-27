@@ -26,10 +26,17 @@ const handleLogin = async (req, res) => {
 
   const match = bcrypt.compare(foundUser.password, pwd);
   if (match) {
+    const roles = Object.values(foundUser.roles);
+
     // this is where we create JWT
     // it will require a payload and we are gonna pass the username object not the password to avoid potential risk.
     const accessToken = jwt.sign(
-      { username: foundUser.userName },
+      {
+        userInfo: {
+          username: foundUser.userName,
+          roles,
+        },
+      },
       process.env.ACCESS_TOKEN_SECRET,
       // in production the expire time will be a small window of time maybe 5mins or 15 mins
       { expiresIn: "120s" } // options
