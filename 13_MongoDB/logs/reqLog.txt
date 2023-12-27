@@ -101,3 +101,6 @@
 20231227	10:48:50	1414fb6a-e1c4-49d9-87a2-759456e6a0b8	POST	undefined	/employees
 20231227	10:49:09	360214ef-f7ed-4cb2-b89a-f936d98a3115	PUT	undefined	/employees
 20231227	10:49:14	40849935-59b2-4d7d-8fdd-276fc382d8b1	PUT	undefined	/employees
+20231227	12:36:38	2d7e1620-24d9-43e6-8565-b8e78a5be0eb	GET	undefined	/
+20231227	12:36:38	47121208-5918-4787-bd2b-eff553d5b9d4	GET	undefined	/css/style.css
+20231227	12:36:38	513f79dc-28c8-412f-bc97-09009e15750a	GET	undefined	/favicon.ico

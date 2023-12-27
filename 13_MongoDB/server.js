@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -9,6 +10,10 @@ const { corsOptions } = require("./config/corsOptions");
 const verifyJWT = require("./middlewares/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middlewares/credential");
+const connectDB = require("./config/dbConn");
+const mongoose = require("mongoose");
+//Connect to MongoDB.
+connectDB();
 
 // What is middleware?
 // it is anything that is in between the req and response
@@ -83,5 +88,8 @@ app.all("*", (req, res) => {
 // CUSTOM ERROR MIDDLEWARE
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`server starter on port ${PORT}`));
-errorHandler;
+// once- run only once
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`server starter on port ${PORT}`));
+});
