@@ -5,6 +5,7 @@
 - traditional databases are built in are built in a relational structure.
 - Related table reference each other with joints as data is queried.
 - this relational tables also normalize the data (i.e) the data is not duplicated(thats the D.R.Y principle)
+- have `table and records`
 
 ## about MongoDb
 
@@ -14,6 +15,7 @@
 - these `document` have key value structure that looks like json
 - collection holds all of the data about a user for eg, instead of breaking it into related tables
 - duplicated and distributing the data where deemed necessary in a nosql structure is permitted.
+- have `collection instead of table and document instead of record`
 
 ## Advantages of MongoDB.
 

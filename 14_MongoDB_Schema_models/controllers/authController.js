@@ -38,7 +38,7 @@ const handleLogin = async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       // in production the expire time will be a small window of time maybe 5mins or 15 mins
-      { expiresIn: "120s" } // options
+      { expiresIn: "900s" } // options
     );
 
     // it will last longer than the accessToken

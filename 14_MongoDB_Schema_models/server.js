@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
-const { logEvents, logger } = require("./middlewares/logEvents");
+const { logger } = require("./middlewares/logEvents");
 const errorHandler = require("./middlewares/errorHandler");
 const PORT = process.env.PORT || 3500;
 const cors = require("cors");
@@ -12,25 +12,9 @@ const cookieParser = require("cookie-parser");
 const credentials = require("./middlewares/credential");
 const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
+
 //Connect to MongoDB.
 connectDB();
-
-// What is middleware?
-// it is anything that is in between the req and response
-// we can call the route handlers the callback function which has (req, res) are teh route handlers they can be single or it can be chained.
-
-// Types of middleware.
-/*
- * built-in
- * custom-middleware (is what we create ourself).
- * middleware from 3rd parties.
- */
-
-// built-in middleware to handle urlencoded data.
-// in other words 'FORM' data.
-// 'content-type: application/x-www-from-url-encoded'
-
-// ++$$$** the falls like waterfall from top to bottom **$$$++
 
 // custom middleware
 app.use(logger);
@@ -54,13 +38,9 @@ app.use(cookieParser());
 
 // serve static files like images, css , text files
 app.use("/", express.static(path.join(__dirname, "/public")));
-app.use("/subdir", express.static(path.join(__dirname, "/public")));
-
-// check the routes like a water fall from top '/' to bottom '/*'
 
 // Routes
 app.use("/", require("./routes/root"));
-app.use("/subdir", require("./routes/subdir"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
