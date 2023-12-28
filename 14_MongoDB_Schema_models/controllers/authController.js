@@ -1,24 +1,15 @@
-const userDB = {
-  users: require("../model/users.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
+const User = require("../model/User");
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
-const fspromises = require("fs").promises;
-const path = require("path");
 
 const handleLogin = async (req, res) => {
   const { user, pwd } = req.body;
   if (!user || !pwd) {
     res.status(400).json({ message: "user name and pwd required" });
   }
-  const foundUser = userDB.users.find((usr) => {
-    return usr.userName === user;
-  });
+
+  const foundUser = await User.findOne({ userName: user });
+  console.log({ foundUser });
 
   // evaluate password.
   if (!foundUser) res.sendStatus(401); // unauthorized
@@ -49,18 +40,14 @@ const handleLogin = async (req, res) => {
     );
 
     // saving refreshToken with current user
-    const otherUsers = userDB.users.filter((usr) => usr.userName !== user);
-    const currentUser = { ...foundUser, refreshToken };
-    userDB.setUsers([...otherUsers, currentUser]);
-    await fspromises.writeFile(
-      path.join(__dirname, "..", "model", "users.json"),
-      JSON.stringify(userDB.users)
-    );
+    foundUser.refreshToken = refreshToken;
+    const adRefTok = await foundUser.save();
+    console.log({ adRefTok });
     // the cookie we sent from our server cant be accessed by js in client and will be sent back on every request and we don't have to send like access token like we did to access token.
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None", // check in browser headers> set-cookies without this // won't work if secure and samesite are uncommented while using in thunderclient.
+      // secure: true,
+      // sameSite: "None", // check in browser headers> set-cookies without this // won't work if secure and samesite are uncommented while using in thunderclient.
       maxAge: 24 * 60 * 60 * 1000, //IN ms(milliseconds) - this is equal to one day
     });
     res.json({ accessToken, name: foundUser.userName });
